@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<style media="screen">
+ a {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #fff4f4;
+}
+.navbar-default .navbar-nav>li>a:hover {
+  background-color: white;
+  color: black;
+}
+
+.navbar-default .navbar-nav>li>a {
+color: white;
+}
+
+navbar-default .navbar-brand:hover {
+    color: #ffffff;
+    background-color: transparent;
+}
+navbar-default .navbar-brand {
+    color: skyblue;
+    background-color: transparent;
+}
+
+.navbar-default .navbar-collapse .navbar-nav li a{
+  color: white;
+}
+
+#black{
+  color: black;
+}
+</style>
+    <body>
+      <!-- BARRE DE MENU -->
+      <nav class="navbar navbar-default navbar-fixed-top" id="navback" >
+    <div class="container ">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{{ path('homepage') }}"><img src="/img/rb.png" alt="runblog logo" class="img-responsive" style="height: 25px;" /></a>
+        <a class="navbar-brand" href="{{ path('homepage') }}" style="color: #ffffff;">RunBlog</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="{{ path('article_index') }}">ARTICLES</a></li>
+
+
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right" >
+
+          <li class="nav-item">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+
+
+
+          {% else %}
+          <!--
+          <a class="nav-link"
+          href="{{ path('fos_user_registration_register') }}">{{ 'Inscription'|trans({}, 'FOSUserBundle') }}</a>
+        -->
+        {% endif %}
+      </li>
+
+
+      <li class="nav-item">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <a "href="{{ path('fos_user_profile_show') }}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Connecté en tant que: {{ app.user.username }}<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a  id="black" href="{{ path('fos_user_profile_show') }}">Voir profil</a></li>
+            <li><a  id="black" href="{{ path('fos_user_profile_edit') }}">Modifier Profil</a></li>
+            <li><a  id="black" href="{{ path('fos_user_change_password') }}">Modifier mot de passe</a></li>
+            <li><a  id="black" href="{{ path('commentaire_user') }}">Mes commentaires</a></li>
+            <!-- PARTIE ADMIN -->
+            {% if is_granted('ROLE_ADMIN') %}
+                  <li><a href="{{ path('fos_user_profile_show') }}" class="dropdown-toggle text-center" id="admin" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADMIN</a></li>
+                    <li class=""><a  id="black" href="{{ path('article_new') }}">Créer un article</a></li>
+                    <li class=""><a  id="black" href="{{ path('allarticle_index') }}">Voir les articles crées </a></li>
+                    <li class=""><a  id="black" href="{{ path('commentaire_index') }}">Gestion de commentaire </a></li>
+
+
+
+
+                  {% endif %}
+             <!-- FIN PARTIE ADMIN -->
+          </ul>
+
+
+          {% else %}
+          <a class="nav-link"
+          href="{{ path('fos_user_security_login') }}">{{ 'Connexion'|trans({}, 'FOSUserBundle') }}</a>
+          {% endif %}
+        </li>
+        <li class="nav-item">
+
+          {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+          <a class="nav-link"
+          href="{{ path('fos_user_security_logout') }}">
+          {{ 'Se deconnecter'|trans({}, 'FOSUserBundle') }}
+        </a>
+        {% else %}
+      <li class="nav-item">
+        <a href="{{ path('fos_user_registration_register') }}" role="button"><i class="fa fa-edit" aria-hidden="true"></i> Inscription</a>
+      </li>
+      {% endif %}
+    </li>
+
+
+
+
+  </ul>
+        <!--BARRE DE RECHERCHE-->
+        <!-- <form class="navbar-form navbar-right" role="search">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="recherche sur le blog">
+          </div>
+          <button type="submit" class="btn btn-default">Rechercher</button>
+        </form> -->
+        <!--FIN BARRE DE RECHERCHE-->
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+  <!-- FIN BARRE DE MENU -->
+
+  <!--SLIDER  -->
+  <div class="carousel slide carousel-fade" data-ride="carousel">
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        </div>
+    </div>
+
+</div>
+
+
+    </body>
+</html>

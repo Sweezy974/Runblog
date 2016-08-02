@@ -1,0 +1,53 @@
+{% include "FOSUserBundle::layout.html.twig" %}
+{% include "base.html.twig" %}
+{% block body %}
+<style>
+
+#articlehover{
+  max-height: 2%;
+}
+
+#articlehover:hover {
+    -webkit-transition: 0.6s;
+    background-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 0 5px 45px 1px rgb(228, 241, 255);
+}
+
+.formart {
+    padding: 40px;
+    background-image: url('../img/sky2.jpg');
+    max-width: 1110px;
+    margin: 60px auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+</style>
+    <div id="marge" class="container ">
+      <h1 style="color:white;background-color:black;text-transform: uppercase;">Les derniers articles</h1>
+      {% for article in articles %}
+      <div class="row formart" id="articlehover">
+        <div class="col-sm-2" style="max-width:35%;"><a href="#" class="">
+          <a href="{{ path('article_show', { 'id': article.id }) }}">
+          <img src="/images/products/{{ article.imageName }}" class="img-responsive" style="    margin-top: 27px;"></a>
+        </a>
+        </div>
+        <div class="col-sm-10">
+          <a href="{{ path('article_show', { 'id': article.id }) }}" style="text-decoration:none;color:black;">
+          <h3 style="color:white;" class="title text-uppercase">{{ article.titre }}</h3>
+          <p style="    font-size: large;">{{ article.description | truncate(70, true, ' ...')  }}</p>
+          <p class="text-muted" style="color:skyblue;">Posté par <strong> {{ article.utilisateur}} </strong> le {{ article.date }} </p>
+        </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

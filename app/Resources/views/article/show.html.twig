@@ -1,0 +1,195 @@
+{% include "FOSUserBundle::layout.html.twig" %}
+{% include "base.html.twig" %}
+
+{% block body %}
+<style media="screen">
+#fbpost {
+  margin-top: 37%;
+}
+
+
+</style>
+
+<!-- Blog Post Content Column -->
+
+<div class="container" id="marge" style="background-color:white;">
+
+<div class="col-lg-8">
+
+    <!-- Blog Post -->
+    {% if article.public == "oui" %}
+    <!-- Title -->
+    <h1 style="color:black;font-weight:bolder;margin-top:11%;">{{ article.titre }}</h1>
+
+
+
+    <hr>
+    <!-- Author -->
+    <p>Posté par <strong> {{ article.utilisateur.username}} </strong> le {{ article.date|date('d/m/Y') }} </p>
+
+
+    <hr>
+
+    <!-- Preview Image -->
+    <div class="col-md-5">
+
+      <img class="img img-responsive" src="/images/products/{{ article.imageName }}" alt="image">
+    </div>
+
+
+
+    <!-- Post Content -->
+    <p class="lead">{{ article.description}}</p>
+
+    <div class="foot col-row col-md-12" style="padding-bottom:25%;padding-top:5%;">
+
+      <div class="col-md-4">
+        <p><a href="{{ path('like_article',{'id':article.id}) }}"><i class="fa fa-thumbs-o-up"></i>
+         {% set like = 0 %}
+         {% for avis in article.avis %}
+         {% set like = like + avis.reaction %}
+         {% endfor %}
+         {{like}}
+         </p></a>
+      </div>
+
+      <div class="col-md-8 text-right">
+        <p>Mise à jour le {% if article.updatedAt %}{{ article.updatedAt|date('d/m/Y') }} à {{ article.updatedAt|date('H:i') }} {% endif %} </p>
+
+      </div>
+      <div class="fb-like col-md-12" data-href="http://runblog.simplonreunion.co/" data-width="150" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
+
+
+      <hr>
+      {% if is_granted('ROLE_ADMIN') %}
+      <div class="col-md-12 text-center" style="margin-top:10px;">
+            <a href="{{ path('article_edit', { 'id': article.id }) }}"><input class="btn btn-primary" type="submit" value="Editer l'article"></a>
+
+      </div>
+      {% endif %}
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <!-- Blog Comments -->
+
+    <!-- Comments Form -->
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <div class="well col-md-12">
+        <h4>Laisser un commentaire :</h4>
+          {{ form_start(form) }}
+
+
+ <div class="form-group">
+   {{ form_widget(form.commentaire, {'attr': {'class':'form-control'}}) }}
+   {{ form_errors(form.commentaire) }}
+ </div>
+
+ <ul class="list-inline text-center">
+     <li>
+       <input type="submit" value="Ajouter" class="btn btn-primary"/>
+     </li>
+  {{ form_end(form) }}
+
+
+
+
+    </div>
+
+    {% endif %}
+    <hr>
+
+    <!-- Posted Comments -->
+
+
+
+     {% for commentaire in article.commentaire %}
+
+    <!-- Comment -->
+    <div class="col-md-12">
+    <div class="media">
+      <div class="col-md-2 col-sm-1 col-lg-2">
+        <a class="pull-left" href="#">
+            <img class="img img-responsive" src="/images/products/{{ commentaire.utilisateur.imageName }}" alt="img" style="max-height:75px">
+        </a>
+      </div>
+        <div class="media-body">
+            <h4 class="media-heading" style="font-weight:bolder;">{{commentaire.utilisateur.username}}
+                <small>
+                {{commentaire.date|date('d/m/Y')}}
+              </small>
+            </h4>
+
+            <div class="col-md-12">
+               {{commentaire.commentaire}}
+            </div>
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+{% if commentaire.utilisateur.id == app.user.id %}
+<a href="{{ path('commentaire_edit' , {'id': commentaire.id }) }}">Modifier mon commentaire<a>
+{% endif %}
+{% endif %}
+<div class="col-md-4">
+  <p><a href="{{ path('like_commentaire',{'article':commentaire.article.id, 'commentaire':commentaire.id}) }}"><i class="fa fa-thumbs-o-up"></i>
+   {% set like = 0 %}
+   {% for avis in commentaire.avis %}
+   {% set like = like + avis.reaction %}
+   {% endfor %}
+   {{like}}
+   </p></a>
+</div>
+
+
+
+        </div>
+    </div>
+    <hr>
+  </div>
+
+  {% endfor %}
+
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+  {% else %}
+    <p class="col-md-12 text-center" style="color:black;"><a href="{{ path('fos_user_security_login') }}">Connectez-vous</a> ou <a href="{{ path('fos_user_registration_register') }}">Inscrivez-vous</a> pour interagir avec la communauté RunBlog :) ! </p>
+  {% endif %}
+
+</div>
+
+    <!-- Comment -->
+
+<div class="col-md-4">
+  <div id="fbpost" class="fb-page" data-href="https://www.facebook.com/RunBlog974/" data-tabs="timeline" data-height="1000" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/RunBlog974/" class="fb-xfbml-parse-ignore" style="margin-top:37%;"><a href="https://www.facebook.com/RunBlog974/">RunBlog&#039;</a></blockquote></div>
+
+
+</div>
+</div>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% include "FOSUserBundle::layout.html.twig" %}
+{% include "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+
+
+{% block fos_user_content %}
+<!--  -->
+<form class="form" action="{{ path("fos_user_security_check") }}" method="post">
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+  <p class="col-md-12 text-center" style="color:white;">Oops ! je crois que vous êtes déjà connécté(e) :3 !Souhaitez-vous retourner à l'<a href="{{ path('homepage') }}">accueil </a>? ou prenez le temps de lire l'un de<a href="{{ path('article_index') }}"> nos articles </a>? :) </p>
+  {% else %}
+
+  <ul class="tab-group">
+    <li class="tab "><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
+    <li class="tab active"><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="signup">
+      <h1>CONNEXION</h1>
+      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+      {% else %}
+      <p class="col-md-12 text-center" style="color:white;"><a href="{{ path('fos_user_security_login') }}">Connectez-vous</a> ou <a href="{{ path('fos_user_registration_register') }}">Inscrivez-vous</a> pour interagir avec la communauté RunBlog :) ! </p>
+      {% endif %}
+
+
+
+
+      <div class="top-row">
+        <div class="field-wrap ">
+          <input class="inputform" type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+          <input type="text" id="username" name="_username" placeholder="Pseudo" value="{{ last_username }}" required="required" />
+        </div>
+
+        <div class="field-wrap ">
+          <input class="inputform" type="password" id="password" placeholder="Mot de passe" name="_password" required="required" />
+        </div>
+
+
+
+
+
+        {% if error %}
+        <div class="col-md-12 text-center error">
+        {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+        {% endif %}
+
+        <input class="btn-primary" type="submit"  name="_submit" value="{{ 'security.login.submit'|trans }}" />
+      </div>
+
+
+
+    </div>
+
+    <div id="login">
+    </div>
+
+  </div><!-- tab-content -->
+
+{% endif %}
+</form> <!-- /form -->
+{% endblock fos_user_content %}
+
+{% endblock %}

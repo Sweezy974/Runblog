@@ -1,0 +1,24 @@
+{% include "FOSUserBundle::layout.html.twig" %}
+{% include "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+<div class="form">
+  <ul class="tab-group" id="felicitation" style="width: 200%;">
+    <li class="tab active"><a href="#">Félicitation !</a></li>
+
+  </ul>
+  <div class="col-md-12 text-center">
+    <h4 style="color:white;">{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</h4>
+    {% if targetUrl %}
+    <h4 style="color:white;"><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></h4>
+    {% endif %}
+
+  </div>
+  <div class="text-center">
+    <a href="{{ path('homepage') }}"><button type="submit" class="btn btn-primary"/>ACCUEIL</button></a>
+
+  </div>
+</div>
+{% endblock fos_user_content %}

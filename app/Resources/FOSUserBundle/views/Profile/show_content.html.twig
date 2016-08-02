@@ -1,0 +1,41 @@
+<style>
+h3{
+  color: white;
+  margin-bottom: 20px;
+}
+
+</style>
+<form class="form " action="{{ path("fos_user_security_check") }}" method="post">
+
+  <ul class="tab-group">
+    <li class="tab active "><a href="#">PROFIL</a></li>
+    <li class="tab"><a href="{{ path('fos_user_profile_edit') }}">MODIFIER</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="signup">
+      <div class="top-row">
+        <div class="fos_user_user_show text-center">
+          <div class="col-md-12 text-center" style="text-align: -webkit-center;">
+            <img class="img img-responsive" src="/images/products/{{ user.imageName }}" alt="image" style="max-height:150px;border: 2px solid #1ab188;margin-bottom: 2%;">
+          </div>
+          <h4 style="color:grey;">Pseudo</h4>
+          <h3>{{ user.username }}</h3>
+          <h4 style="color:grey;">email actuel</h4>
+          <h3> {{ user.email }}</h3>
+          <h4 style="color:grey;">nom</h4>
+          <h3> {{ user.nom }}</h3>
+          <h4 style="color:grey;"> Prénom</h4>
+          <h3>{{ user.prenom }}</h3>
+        </div>
+      </div>
+
+
+
+    </div>
+
+    <div id="login">
+    </div>
+
+  </div><!-- tab-content -->
+</form> <!-- /form -->

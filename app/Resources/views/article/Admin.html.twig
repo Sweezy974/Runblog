@@ -1,0 +1,75 @@
+{% include "FOSUserBundle::layout.html.twig" %}
+{% include "base.html.twig" %}
+
+
+
+<div class="container tableau">
+  <div class="table-responsive">
+    <div class="col-md-12 text-center">
+      <h2 class="text-uppercase">Liste d'article crée(s)</h2>
+
+
+    </div>
+
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th >Titre</th>
+        <th class="text-center">Date</th>
+        <th class="text-center">Etat</th>
+        <th class="text-center">J'aime(s)</th>
+        <th class="text-center">Commentaire(s)</th>
+        <th class="text-center"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for article in articles %}
+          <tr>
+              <td><a href="{{ path('article_show', { 'id': article.id }) }}"> {{ article.titre }} </a><br><small>contenu de l'article : {{ article.description| truncate(60,true,"...") }} </small></td>
+              <td class="text-center">{{ article.date|date("d/m/Y") }}</td>
+              <td class="text-center"><div class="btn-group btn-toggle" data-toggle="buttons">
+                  <label class="btn {% if article.public == 'oui' %}btn-primary{% endif %}">
+                      <input type="radio" name="options" value="option1" disabled> Publié
+                  </label>
+                  <label class="btn {% if article.public == 'non' %}btn-primary{% endif %}">
+                      <input type="radio" name="options" value="option2" disabled> Brouillon
+                  </label>
+              </div>
+            </td>
+            <td class="text-center">
+              <p><i class="fa fa-thumbs-o-up"></i>
+              {% set like = 0 %}
+              {% for avis in article.avis %}
+              {% set like = like + avis.reaction %}
+              {% endfor %}
+              {{like}}
+               </p>
+
+            </td>
+            <td class="text-center">
+              <p>
+              {% set nombercomment = 0 %}
+              {% for commentaire in article.commentaire %}
+              {% set nombercomment = nombercomment + 1 %}
+              {% endfor %}
+              {{nombercomment}}
+               </p>
+
+            </td>
+              <td>
+                  <ul>
+                      <li style="list-style:none;">
+                          <a href="{{ path('article_edit', { 'id': article.id }) }}"><i class="fa fa-edit"></i> Editer</a>
+                      </li>
+                  </ul>
+              </td>
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    </div>
+  <div class=" text-center" style="margin-top:10px;">
+    <a href="{{ path('article_new') }}"><button class="btn btn-primary" type="button" name="button"> <i class="fa fa-plus"></i> Nouvel Article</button></a>
+  </div>
+</div>
